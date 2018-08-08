@@ -1,5 +1,5 @@
 import numpy as np
-from keras.layers import Input, Dense, Embedding, LSTM, Dropout, concatenate
+from keras.layers import Input, Dense, Embedding, LSTM, Dropout, Reshape, concatenate
 from keras.models import Model
 from keras.optimizers import Adam
 from keras.utils.np_utils import to_categorical
@@ -13,11 +13,11 @@ def get_model() -> Model:
 
     email_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="email_embedding")(email_input)
     website_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="website_embedding")(website_input)
-    bio_embedding = Embedding(output_dim=256, input_dim=1, input_length=512, name="bio_embedding")(bio_input)
+    bio_reshape = Reshape((1, 512), input_shape=(512,), name="bio_reshape")(bio_input)
 
     email_lstm = LSTM(32, name="email_lstm")(email_embedding)
     website_lstm = LSTM(32, name="website_lstm")(website_embedding)
-    bio_lstm = LSTM(64, name="bio_lstm")(bio_embedding)
+    bio_lstm = LSTM(64, name="bio_lstm")(bio_reshape)
 
     merge = concatenate([website_lstm, email_lstm, bio_lstm, main_input], name="merge")
 
@@ -49,7 +49,7 @@ def train_model(model: Model, dataset: np.ndarray, callbacks: list = None) -> No
         epochs=3,
         batch_size=32,
         callbacks=callbacks,
-        validation_split=0.1,
+        validation_split=0.2,
     )
 
 
@@ -87,10 +87,3 @@ if __name__ == "__main__":
     train_model(m, training_data, [tensorboard])
 
     m.save_weights("snapshots/lodbrok-{}.h5py".format(datetime.datetime.now().isoformat()))
-
-    # m = load_model("snapshots/lodbrok-2018-08-06T20:03:23.228350.h5py")
-
-    with open("../SENSITIVE/spambrainz_dataset_eval.pickle", "rb") as f:
-        eval_data = pickle.load(f)
-
-    evaluate_model(m, eval_data)
