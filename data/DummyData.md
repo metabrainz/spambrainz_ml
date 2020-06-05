@@ -1,6 +1,6 @@
 # Dummy data generator 
 
-The current files are used to generate dummy data to be fed into LodBrok model for testing/training puposes. The file spam_dummy_data_generator notebook is used to create the eleven paramaters of spam editor accounts required for LodBrok, namely: 
+The current files are used to generate dummy data to be fed into LodBrok model for testing/training puposes. The file spam_dummy_data_generator and non_spam_dummy_data_generator notebook are used to create the eleven paramaters of spam and non-spam editor accounts respectively required for LodBrok, namely: 
 * email
 * website
 * bio
@@ -13,7 +13,7 @@ The current files are used to generate dummy data to be fed into LodBrok model f
 * last_updated
 * last_login_date 
 
-The file uses the spam domains of emails and websites obtained thorugh research and colloboration. Rest all parameters are purely synthetic genrated through analysis of editor accounts. All the parameters are generated and stored in a pickle file to be used later.
+The file uses the spam and non-spam domains of emails and websites obtained thorugh research and colloboration. Rest all parameters are purely synthetic which are genrated through analysis of editor accounts. All the parameters are generated and stored in a pickle file to be used later to train the model.
 
 ### How to use:
 
