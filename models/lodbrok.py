@@ -11,13 +11,13 @@ def get_model() -> Model:
     website_input = Input(shape=(1,), dtype="int32", name="website_input")
     bio_input = Input(shape=(512,), name="bio_input")
 
-    email_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="email_embedding")(email_input)
-    website_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="website_embedding")(website_input)
+    email_embedding = Embedding(output_dim=256, input_dim=1025, input_length=1, name="email_embedding")(email_input)
+    website_embedding = Embedding(output_dim=256, input_dim=1025, input_length=1, name="website_embedding")(website_input)
     bio_reshape = Reshape((1, 512), input_shape=(512,), name="bio_reshape")(bio_input)
 
-    email_lstm = LSTM(1, name="email_lstm")(email_embedding)
-    website_lstm = LSTM(1, name="website_lstm")(website_embedding)
-    bio_lstm = LSTM(1, name="bio_lstm")(bio_reshape)
+    email_lstm = LSTM(32, name="email_lstm")(email_embedding)
+    website_lstm = LSTM(32, name="website_lstm")(website_embedding)
+    bio_lstm = LSTM(64, name="bio_lstm")(bio_reshape)
 
     merge = concatenate([website_lstm, email_lstm, bio_lstm, main_input], name="merge")
 
@@ -37,19 +37,17 @@ def get_model() -> Model:
     return model
 
 
-def train_model(model: Model , dataset: np.ndarray, callbacks: list = None) -> None:
-    print(dataset[:,12:])
+def train_model(model: Model, dataset: np.ndarray, callbacks: list = None) -> None:
     model.fit(
         {
-            
             "main_input": dataset[:, 1:10],
             "email_input": dataset[:, 10],
             "website_input": dataset[:, 11],
             "bio_input": dataset[:, 12:]
         },
         to_categorical(dataset[:, 0], 2),
-        epochs=10,
-        batch_size=2,
+        epochs=3,
+        batch_size=32,
         callbacks=callbacks,
         validation_split=0.2,
     )
@@ -80,13 +78,12 @@ if __name__ == "__main__":
     import datetime
     from keras.callbacks import TensorBoard
 
-    with open("../spambrainz_dataset.pickle", "rb") as f:
+    with open("../data/spambrainz_dataset.pickle", "rb") as f:
         training_data = pickle.load(f)
 
     tensorboard = TensorBoard(log_dir="./logs", write_graph=True, histogram_freq=0)
 
     m = get_model()
     train_model(m, training_data, [tensorboard])
-    print(m.summary())
-    m.save("../lodbrok1.h5")
-    #m.save_weights("snapshots/lodbrok-{}.h5".format(datetime.datetime.now().isoformat()))
+    m.save("weights/lodbrok1.h5")
+   # m.save_weights("snapshots/lodbrok-{}.h5py".format(datetime.datetime.now().isoformat()))
