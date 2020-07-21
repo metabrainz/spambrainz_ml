@@ -73,11 +73,16 @@ This will store the model in a h5 type file, which later can be used to load the
 
 ### Model evaluation
 
-1) Another pickle file is created to test the model that we trained, this is stored in "test.pickle" file. 
-2) It is then evaluated with the model we saved earlier in "eval.py". This will show how accurately the model predicted against the test data. 
+1) Another pickle file is created to evaluate the model that we trained, this is stored in "spambrainz_dataset_eval.pickle" file. 
+2) It is then evaluated with the model we saved earlier in "eval.py". This will show how accurately the model fairs against the eval data. This is useful to avoid overfitting or underfitting of the model.
 
 This is the result of evaluation done on:
 ![](eval.png)
+
+### Model prediction
+
+1) New dataset named "spambrainz_dataset_predict.pickle" is used to test the model predictions and how accurate it is with new data.
+2) The check_predict.py predicts the data given without any label specifying the type of editor account.
 
 In summary the Lodbrok model achieves a very high spam detection rate while simultaneously maintaining a low false positive rate. Data falsely classified by the model should be further examined to determine whether it really is part of the right dataset or whether there is a deficit of a certain type of data.
 
