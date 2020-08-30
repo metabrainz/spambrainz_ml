@@ -3,4 +3,4 @@
 Keras models for [SpamBrainz](https://github.com/metabrainz/spambrainz),
 MusicBrainz' spam detection system.
 
-The current model is `lodbrok`.
+The model developed to detect spam is [LodBrok](LodBrok.md).

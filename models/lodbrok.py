@@ -1,7 +1,7 @@
 import numpy as np
-from keras.layers import Input, Dense, Embedding, LSTM, Dropout, Reshape, concatenate
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Input, Dense, Embedding, LSTM, Dropout, Reshape, concatenate
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 from keras.utils.np_utils import to_categorical
 
 
@@ -11,8 +11,8 @@ def get_model() -> Model:
     website_input = Input(shape=(1,), dtype="int32", name="website_input")
     bio_input = Input(shape=(512,), name="bio_input")
 
-    email_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="email_embedding")(email_input)
-    website_embedding = Embedding(output_dim=256, input_dim=1024, input_length=1, name="website_embedding")(website_input)
+    email_embedding = Embedding(output_dim=256, input_dim=1025, input_length=1, name="email_embedding")(email_input)
+    website_embedding = Embedding(output_dim=256, input_dim=1025, input_length=1, name="website_embedding")(website_input)
     bio_reshape = Reshape((1, 512), input_shape=(512,), name="bio_reshape")(bio_input)
 
     email_lstm = LSTM(32, name="email_lstm")(email_embedding)
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     import datetime
     from keras.callbacks import TensorBoard
 
-    with open("../SENSITIVE/spambrainz_dataset.pickle", "rb") as f:
+    with open("../data/spambrainz_dataset.pickle", "rb") as f:
         training_data = pickle.load(f)
 
     tensorboard = TensorBoard(log_dir="./logs", write_graph=True, histogram_freq=0)
 
     m = get_model()
     train_model(m, training_data, [tensorboard])
-
-    m.save_weights("snapshots/lodbrok-{}.h5py".format(datetime.datetime.now().isoformat()))
+    m.save("weights/lodbrok1.h5")
+   # m.save_weights("snapshots/lodbrok-{}.h5py".format(datetime.datetime.now().isoformat()))

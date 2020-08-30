@@ -1,6 +1,7 @@
+
 import pickle
 import numpy as np
-from spambrainz_ml.models.lodbrok import load_model
+from models.lodbrok import load_model
 
 
 def split_entries(entries):
