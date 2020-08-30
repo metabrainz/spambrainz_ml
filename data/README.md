@@ -15,7 +15,7 @@ The current files are used to generate dummy data to be fed into LodBrok model f
 
 The file uses the spam and non-spam domains of emails and websites obtained thorugh research and colloboration. Rest all parameters are purely synthetic which are genrated through analysis of editor accounts. All the parameters are generated and stored in a pickle file to be used later to train the model.
 
-The test data generated is also kept in this folder, which has 10000 values each for spam and non_spam datasets. In that, 8000 values are used to train the model and 500 values are used to test the trained model. The data generated are stored in pickle files which take about 100 MB of data storage.
+The test data generated is also kept in this folder, which has 10000 values each for spam and non_spam datasets. In that, 8000 values are used to train the model and 500 values are used to evaluate the trained model. About 100 values are used to test the model and see it's predictions. The data generated are stored in pickle files which take about 100 MB of data storage.
 
 ### How to use:
 
