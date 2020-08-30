@@ -1,5 +1,8 @@
-logs/
-.idea/
 __pycache__/
 .ipynb_checkpoints/
 *.h5py
+/data/*.pickle
+/venv
+logs/
+/data/data_gen
+/models/weights/retrain_lodbrok.h5

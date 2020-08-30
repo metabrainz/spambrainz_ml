@@ -1,3 +1,11 @@
+import argparse
+
+description = """   This script assumes to be run at 'models' directory.
+                    It requires 'lodbrok1.h5'. The purpose of the script is
+                    to retrain the LodBrok model to similate online learning.
+                    The output of this script is 'retrain_lodbrok.h5'."""
+
+parser = argparse.ArgumentParser(description=description)
 import numpy as np
 from tensorflow.keras.layers import Input, Dense, Embedding, LSTM, Dropout, Reshape, concatenate
 from tensorflow.keras.models import Model
