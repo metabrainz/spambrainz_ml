@@ -1,3 +1,13 @@
+import argparse
+
+description = """   This script assumes to be run at 'models' directory.
+                    It requires 'spambrainz_dataset.pickle'. The purpose of
+                    the script is train the LodBrok model to classify spam and
+                    non_spam editor accounts.The output of this script is
+                    'lodbrok1.h5'."""
+
+parser = argparse.ArgumentParser(description=description)
+
 import numpy as np
 from tensorflow.keras.layers import Input, Dense, Embedding, LSTM, Dropout, Reshape, concatenate
 from tensorflow.keras.models import Model
